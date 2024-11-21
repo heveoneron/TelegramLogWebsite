@@ -16,6 +16,24 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                {{-- Menu Addon Manager --}}
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('addon_list.index')" :active="request()->routeIs('addon_list')">
+                        {{ __('Addon List') }}
+                    </x-nav-link>
+                </div>
+                {{-- Menu Business Partners --}}
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('business_partners.index')" :active="request()->routeIs('business_partners')">
+                        {{ __('Business Partners List') }}
+                    </x-nav-link>
+                </div>
+                {{-- Menu List Logs --}}
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('list-logs.index')" :active="request()->routeIs('list-logs')">
+                        {{ __('List Logs') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
