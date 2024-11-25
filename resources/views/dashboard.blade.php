@@ -11,7 +11,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg mb-6">
                 <div class="p-8 text-black dark:text-gray-100">
                     <h1 class="text-3xl font-bold mb-4">Welcome to the Dashboard</h1>
-                    <p class="text-lg">Here you can see the log data charts in a more compact and user-friendly view.</p>
+                    <p class="text-lg">Here you can see the log data charts </p>
                 </div>
             </div>
 
