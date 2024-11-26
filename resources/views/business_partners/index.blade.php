@@ -45,7 +45,7 @@
                                     url: '{{ route('business_partners.data') }}',
                                     type: 'GET',
                                     error: function(xhr, error, code) {
-                                        console.log('Error:', error); // For debugging
+                                        console.log('Error:', error); // Debugging
                                         $('#bp-table').html(
                                             '<p class="text-center">Data not found or there was an error.</p>');
                                     }
@@ -70,35 +70,46 @@
                                         data: null,
                                         render: function(data, type, row) {
                                             return `
-                                                <a href="{{ url('business_partners') }}/${row.id}/edit" class="btn btn-warning btn-sm text-white rounded-lg px-4 py-2">
-                                                    Edit
-                                                </a>
-                                                <button class="btn btn-danger btn-sm text-white rounded-lg px-4 py-2" onclick="deletePartner(${row.id})">
-                                                    Delete
-                                                </button>
+                                                <a href="{{ url('business_partners') }}/${row.id}/edit" class="btn btn-warning btn-sm text-white rounded-lg px-4 py-2">Edit</a>
+                                                <button class="btn btn-danger btn-sm text-white rounded-lg px-4 py-2" onclick="deletePartner(${row.id})">Delete</button>
                                             `;
                                         },
-                                        orderable: false,
-                                        searchable: false
+                                        orderable: false, // Kolom ini tidak dapat diurutkan
+                                        searchable: false // Kolom ini tidak dapat dicari
                                     }
-                                ]
+                                ],
+                                pageLength: 10, // Jumlah data per halaman
+                                lengthMenu: [10, 25, 50, 100], // Pilihan jumlah data per halaman
+                                searching: true, // Aktifkan fitur pencarian
+                                ordering: true, // Mengaktifkan fitur pengurutan pada DataTables
+                                language: {
+                                    search: "Search:", // Label pencarian
+                                    lengthMenu: "Show _MENU_ entries per page",
+                                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                                    infoEmpty: "No entries available",
+                                    infoFiltered: "(filtered from _MAX_ total entries)",
+                                    zeroRecords: "No matching records found",
+                                    paginate: {
+                                        first: "First",
+                                        last: "Last",
+                                        next: "Next",
+                                        previous: "Previous"
+                                    }
+                                }
                             });
                         });
 
-                        function deletePartner(bp_code) {
+                        function deletePartner(id) {
                             if (confirm('Are you sure you want to delete this business partner?')) {
                                 $.ajax({
-                                    url: '{{ url('business_partners') }}/' + bp_code,
+                                    url: '{{ url('business_partners') }}/' + id,
                                     type: 'DELETE',
                                     data: {
                                         _token: '{{ csrf_token() }}'
                                     },
                                     success: function(response) {
-                                        // Debug response
-                                        console.log(response);
                                         if (response.success) {
-                                            // Reload the table after successful deletion
-                                            $('#business_partners').DataTable().ajax.reload();
+                                            $('#bp-table').DataTable().ajax.reload();
                                             alert('Business Partner deleted successfully!');
                                         } else {
                                             alert('Error: Business Partner not found.');
@@ -112,6 +123,7 @@
                             }
                         }
                     </script>
+
                 </div>
             </div>
         </div>

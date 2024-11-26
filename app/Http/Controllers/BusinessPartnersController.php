@@ -25,37 +25,45 @@ class BusinessPartnersController extends Controller
         return view('business_partners.createBP_List');
     }
 
-    public function getData()
+    public function getData(Request $request)
     {
-        // $listAddon = AddOnMasterData::all();
-        // dd($listAddon);
-        // return DataTables::of($listAddon);
+        $length = $request->input('length', 10); // Jumlah data per halaman
+        $start = $request->input('start', 0); // Offset untuk pagination
+        $searchValue = $request->input('search.value', ''); // Pencarian
 
-        $users = BusinessPartner::all();
+        // Parameter sorting yang diterima DataTables
+        $orderColumnIndex = $request->input('order.0.column', 0); // Kolom yang akan diurutkan
+        $orderDirection = $request->input('order.0.dir', 'asc'); // Arah pengurutan
 
-        // Format untuk JSON response DataTables
+        // Kolom yang dapat diurutkan
+        $columns = ['bp_code', 'bp_name', 'address', 'telegram_token'];
+
+        // Query awal
+        $query = BusinessPartner::query();
+
+        // Pencarian (search)
+        if (!empty($searchValue)) {
+            $query->where('bp_code', 'like', "%{$searchValue}%")
+                ->orWhere('bp_name', 'like', "%{$searchValue}%")
+                ->orWhere('address', 'like', "%{$searchValue}%")
+                ->orWhere('telegram_token', 'like', "%{$searchValue}%");
+        }
+
+        // Sort berdasarkan kolom yang dipilih dan arah pengurutan
+        $query->orderBy($columns[$orderColumnIndex], $orderDirection);
+
+        // Total data setelah filter
+        $totalFiltered = $query->count();
+
+        // Pagination
+        $partners = $query->offset($start)->limit($length)->get();
+
         return response()->json([
-            'recordsTotal' => BusinessPartner::count(),
-            'recordsFiltered' => $users->count(),
-            'data' => $users
+            'draw' => $request->input('draw'),
+            'recordsTotal' => BusinessPartner::count(), // Total data tanpa filter
+            'recordsFiltered' => $totalFiltered, // Total data setelah filter
+            'data' => $partners
         ]);
-
-        // //  // Ambil semua data BusinessPartner
-        // $users = BusinessPartner::all();
-
-        // // Format untuk JSON response DataTables dengan styling untuk teks
-        // return response()->json([
-        //     'recordsTotal' => BusinessPartner::count(),
-        //     'recordsFiltered' => $users->count(),
-        //     'data' => $users->map(function($user) {
-        //         // Misalnya ubah warna berdasarkan kode BP
-        //         $user->bp_code = '<span style="color: black;">' . $user->bp_code . '</span>';
-        //         $user->bp_name = '<span style="color: black;">' . $user->bp_name . '</span>';
-        //         $user->address = '<span style="color: black;">' . $user->address . '</span>';
-        //         $user->telegram_token = '<span style="color: black;">' . $user->telegram_token . '</span>';
-        //         return $user;
-        //     })
-        // ]);
     }
 
     public function store(Request $request)
