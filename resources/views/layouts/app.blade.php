@@ -14,12 +14,109 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        {{-- add script --}}
+
+        <!-- DataTables CSS -->
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+
+        <!-- jQuery and DataTables JS -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+        <!-- Custom Styles -->
+        <style>
+            body {
+                font-family: 'Figtree', sans-serif;
+                color: black !important;
+                background-color: #f9fafb;
+            }
+
+            .min-h-screen {
+                background-color: #f9fafb;
+            }
+
+            .bg-gray-100 {
+                background-color: #f9fafb;
+            }
+
+            .dark\:bg-gray-900 {
+                background-color: #111827;
+            }
+
+            .bg-white {
+                background-color: #ffffff;
+            }
+
+            .dark\:bg-gray-800 {
+                background-color: #1f2937;
+            }
+
+            .font-sans {
+                font-family: 'Figtree', sans-serif;
+            }
+
+            .text-black {
+                color: black;
+            }
+
+            .table th, .table td {
+                padding: 12px;
+                text-align: left;
+                vertical-align: middle;
+            }
+
+            .table thead {
+                background-color: #f3f4f6;
+                font-weight: 600;
+            }
+
+            .table tbody tr:hover {
+                background-color: #f1f5f9;
+            }
+
+            .table-bordered th, .table-bordered td {
+                border: 1px solid #e5e7eb;
+            }
+
+            .btn-primary {
+                background-color: #2563eb;
+                color: white;
+                border-radius: 8px;
+                font-size: 16px;
+                padding: 10px 20px;
+                transition: background-color 0.3s;
+            }
+
+            .btn-primary:hover {
+                background-color: #1e40af;
+            }
+
+            header {
+                background-color: #ffffff;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .max-w-7xl {
+                max-width: 7xl;
+                margin: 0 auto;
+            }
+
+            .py-6 {
+                padding-top: 1.5rem;
+                padding-bottom: 1.5rem;
+            }
+
+            .sm\:px-6, .lg\:px-8 {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+
+            .mb-3 {
+                margin-bottom: 1rem;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
+
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
 
@@ -37,5 +134,6 @@
                 {{ $slot }}
             </main>
         </div>
+
     </body>
 </html>

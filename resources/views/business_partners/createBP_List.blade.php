@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-black leading-tight">
             {{ __('Input Data AddOn List') }}
         </h2>
     </x-slot>
@@ -8,58 +8,32 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="p-6 text-black">
                     <form action="{{ route('business_partners.store') }}" method="POST">
                         @csrf
 
                         <!-- Business Partners Name -->
-                        <div class="form-group">
-                            <label for="bp_name">Business Partners Name</label>
-                            <input type="text" name="bp_name" id="bp_name" class="form-control" required>
+                        <div class="form-group mb-6">
+                            <label for="bp_name" class="block text-black font-medium">Business Partners Name</label>
+                            <input type="text" name="bp_name" id="bp_name" class="form-control mt-1 border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-2 w-full" required>
                         </div>
 
                         <!-- Address -->
-                        <div class="form-group">
-                            <label for="address">Address</label>
-                            <input type="text" name="address" id="address" class="form-control" required>
+                        <div class="form-group mb-6">
+                            <label for="address" class="block text-black font-medium">Address</label>
+                            <input type="text" name="address" id="address" class="form-control mt-1 border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-2 w-full" required>
                         </div>
 
-                        <!-- telegram_token -->
-                        <div class="form-group">
-                            <label for="telegram_token">Telegram Token</label>
-                            <input type="text" name="telegram_token" id="telegram_token" class="form-control" required>
+                        <!-- Telegram Token -->
+                        <div class="form-group mb-6">
+                            <label for="telegram_token" class="block text-black font-medium">Telegram Token</label>
+                            <input type="text" name="telegram_token" id="telegram_token" class="form-control mt-1 border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-2 w-full" required>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary py-2 px-4 bg-indigo-600 text-white rounded hover:bg-indigo-700">Save</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
-
-{{-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Data AddOn List</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1>Input Data AddOn List</h1>
-        <form action="{{ route('addon_list.store') }}" method="POST">
-            @csrf
-
-            <!-- addon_list -->
-            <div class="form-group">
-                <label for="addon_name">Addon Name</label>
-                <input type="text" name="addon_name" id="addon_name" class="form-control" required>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Save</button>
-        </form>
-    </div>
-</body>
-</html> --}}

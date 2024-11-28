@@ -22,11 +22,11 @@ class ListLog extends Model
 
     public function addOn()
     {
-        return $this->belongsTo(AddOnMasterData::class, 'addon_id');
+        return $this->belongsTo(AddOnMasterData::class, 'addon_id', 'addon_id');
     }
 
     public function businessPartner()
     {
-        return $this->belongsTo(BusinessPartner::class, 'bp_code');
+        return $this->belongsTo(BusinessPartner::class, 'bp_code', 'bp_code');
     }
 }

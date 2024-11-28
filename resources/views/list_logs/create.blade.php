@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-black leading-tight">
             {{ __('Input Data Log') }}
         </h2>
     </x-slot>
@@ -8,14 +8,14 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{-- {{ __("You're logged in!") }} --}}
-                    <form action="{{ route('list-logs.store') }}" method="POST">
+                <div class="p-6 text-black dark:text-gray-100">
+                    <form action="{{ route('list-logs.store') }}" method="POST" class="space-y-6">
                         @csrf
+
                         <!-- AddOn -->
                         <div class="form-group">
-                            <label for="addon_id">AddOn</label>
-                            <select name="addon_id" id="addon_id" class="form-control">
+                            <label for="addon_id" class="block text-sm font-medium text-gray-700">AddOn</label>
+                            <select name="addon_id" id="addon_id" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                                 <option value="">-- Select AddOn --</option>
                                 @foreach($addons as $addon)
                                     <option value="{{ $addon->addon_id }}">{{ $addon->addon_name }}</option>
@@ -25,8 +25,8 @@
 
                         <!-- Business Partner -->
                         <div class="form-group">
-                            <label for="bp_code">Business Partner</label>
-                            <select name="bp_code" id="bp_code" class="form-control">
+                            <label for="bp_code" class="block text-sm font-medium text-gray-700">Business Partner</label>
+                            <select name="bp_code" id="bp_code" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                                 <option value="">-- Select Business Partner --</option>
                                 @foreach($businessPartners as $partner)
                                     <option value="{{ $partner->bp_code }}">{{ $partner->bp_name }}</option>
@@ -36,85 +36,29 @@
 
                         <!-- Description -->
                         <div class="form-group">
-                            <label for="description">Description</label>
-                            <input type="text" name="description" id="description" class="form-control" required>
+                            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                            <input type="text" name="description" id="description" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
                         </div>
 
                         <!-- Date -->
                         <div class="form-group">
-                            <label for="date">Date</label>
-                            <input type="date" name="date" id="date" class="form-control" required>
+                            <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+                            <input type="date" name="date" id="date" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
                         </div>
 
                         <!-- Status -->
                         <div class="form-group">
-                            <label for="status">Status</label>
-                            <input type="text" name="status" id="status" class="form-control" required>
+                            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                            <input type="text" name="status" id="status" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition duration-200 ease-in-out">
+                            Save
+                        </button>
                     </form>
+                </div>
             </div>
         </div>
     </div>
 </x-app-layout>
-
-{{-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Data Log</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1>Input Data Log</h1>
-        <form action="{{ route('list-logs.store') }}" method="POST">
-            @csrf
-
-            <!-- AddOn -->
-            <div class="form-group">
-                <label for="addon_id">AddOn</label>
-                <select name="addon_id" id="addon_id" class="form-control">
-                    <option value="">-- Select AddOn --</option>
-                    @foreach($addons as $addon)
-                        <option value="{{ $addon->addon_id }}">{{ $addon->addon_name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <!-- Business Partner -->
-            <div class="form-group">
-                <label for="bp_code">Business Partner</label>
-                <select name="bp_code" id="bp_code" class="form-control">
-                    <option value="">-- Select Business Partner --</option>
-                    @foreach($businessPartners as $partner)
-                        <option value="{{ $partner->bp_code }}">{{ $partner->bp_name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <!-- Description -->
-            <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" name="description" id="description" class="form-control" required>
-            </div>
-
-            <!-- Date -->
-            <div class="form-group">
-                <label for="date">Date</label>
-                <input type="date" name="date" id="date" class="form-control" required>
-            </div>
-
-            <!-- Status -->
-            <div class="form-group">
-                <label for="status">Status</label>
-                <input type="text" name="status" id="status" class="form-control" required>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Save</button>
-        </form>
-    </div>
-</body>
-</html> --}}

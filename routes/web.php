@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ListLogController;
 use App\Http\Controllers\BusinessPartnersController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AddonListController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,9 +12,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,5 +40,6 @@ Route::get('business_partners', [BusinessPartnersController::class, 'index'])->n
 Route::get('business_partners/data', [BusinessPartnersController::class, 'getData'])->name('business_partners.data');
 Route::get('business_partners/create', [BusinessPartnersController::class, 'create'])->name('business_partners.create');
 Route::post('business_partners', [BusinessPartnersController::class, 'store'])->name('business_partners.store');
+Route::delete('business_partners/{bp_code}', [BusinessPartnersController::class, 'destroy'])->name('business_partners.destroy');
 
 require __DIR__.'/auth.php';

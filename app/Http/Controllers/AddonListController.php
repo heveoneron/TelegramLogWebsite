@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\AddOnMasterData;
 use Illuminate\Http\Request;
 
@@ -23,18 +24,41 @@ class AddonListController extends Controller
         return view('addon_list.createAddon_List');
     }
 
-    public function getData()
+    public function getData(Request $request)
     {
-        // $listAddon = AddOnMasterData::all();
-        // dd($listAddon);
-        // return DataTables::of($listAddon);
+        $length = $request->input('length', 10); // Jumlah data per halaman
+        $start = $request->input('start', 0); // Offset untuk pagination
+        $searchValue = $request->input('search.value', ''); // Pencarian
 
-        $addons = AddOnMasterData::all();
+        // Parameter sorting yang diterima DataTables
+        $orderColumnIndex = $request->input('order.0.column', 0); // Kolom yang akan diurutkan
+        $orderDirection = $request->input('order.0.dir', 'asc'); // Arah pengurutan
 
-        // Format untuk JSON response DataTables
+        // Kolom yang dapat diurutkan
+        $columns = ['addon_id', 'addon_name'];
+
+        // Query awal
+        $query = AddOnMasterData::query();
+
+        // Pencarian (search)
+        if (!empty($searchValue)) {
+            $query->where('addon_id', 'like', "%{$searchValue}%")
+                ->orWhere('addon_name', 'like', "%{$searchValue}%");
+        }
+
+        // Sort berdasarkan kolom yang dipilih dan arah pengurutan
+        $query->orderBy($columns[$orderColumnIndex], $orderDirection);
+
+        // Total data setelah filter
+        $totalFiltered = $query->count();
+
+        // Pagination
+        $addons = $query->offset($start)->limit($length)->get();
+
         return response()->json([
-            'recordsTotal' => AddOnMasterData::count(),
-            'recordsFiltered' => $addons->count(),
+            'draw' => $request->input('draw'),
+            'recordsTotal' => AddOnMasterData::count(), // Total data tanpa filter
+            'recordsFiltered' => $totalFiltered, // Total data setelah filter
             'data' => $addons
         ]);
     }
